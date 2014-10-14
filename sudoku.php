@@ -48,32 +48,32 @@ print_r($_SESSION);
 <form>
 <table border="0 ">
 <?php
-for($i=1; $i<=9; $i++) //Rad
+for($row=1; $row<=9; $row++) //Rad
 {
 
 
 
-	if ($i==4 || $i==7)
+	if ($row==4 || $row==7)
 		echo '<tr><td colspan="12">&nbsp;</td></tr>';
 			echo "<tr>\n";
 	//else
 	//{
-		for($j=1; $j<10;) //Kolonne
+		for($col=1; $col<10;) //Kolonne
 		{
 			
 		
-			if (($j==4 || $j==7)/* && ($i==1 || $i==5 || $i==9)*/)
+			if (($col==4 || $col==7)/* && ($row==1 || $row==5 || $row==9)*/)
 			{
 				echo "\t<td>&nbsp;&nbsp;";
-//				$j++;	
+//				$col++;	
 			}
 //			else
 //			{
 				echo "\t<td>";
-				if ($_SESSION['felt'.$i.'-'.$j]==0)
-					$_SESSION['felt'.$i.'-'.$j]=NULL;
-				echo '<input type="text" name="felt'.$i.'-'.$j.'" value="'.$_SESSION['felt'.$i.'-'.$j].'" onkeyup="showHint(this.value,this.name)" onreset="showHint(this.value,this.name)" size="1" maxlength="1" />';
-			 $j++;
+				if ($_SESSION['felt'.$row.'-'.$col]==0)
+					$_SESSION['felt'.$row.'-'.$col]=NULL;
+				echo '<input type="text" name="felt'.$row.'-'.$col.'" value="'.$_SESSION['felt'.$row.'-'.$col].'" onkeyup="showHint(this.value,this.name)" onreset="showHint(this.value,this.name)" size="1" maxlength="1" />';
+			 $col++;
 
 //			}
 			echo "</td>\n";
