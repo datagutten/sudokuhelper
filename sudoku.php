@@ -14,30 +14,30 @@ if (true)
 
 <body>
 <script type="text/javascript">
-function showHint(str,name)
+function validate(str,name,row,col)
 {
-if (str.length==0)
-  {
-  document.getElementById("txtHint").innerHTML="";
-  return;
-  }
-if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-  }
-else
-  {// code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-xmlhttp.onreadystatechange=function()
-  {
-  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-    document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
-    }
-  }
-xmlhttp.open("GET","sudoku_serverside.php?query=true&name="+name+"&q="+str,true);
-xmlhttp.send();
+
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	
+	xmlhttp.onreadystatechange=function() //This is called after a http request
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+			if (xmlhttp.responseText.indexOf("Feil") !=-1)
+			{
+				document.getElementById(name).className = "wrong";
+			}
+			if (xmlhttp.responseText.length == 0)
+				document.getElementById(name).className = "white";
+		}
+	}
+	//Send HTTP request
+	xmlhttp.open("GET","sudoku_serverside.php?query=true&name="+name+"&q="+str+"&row="+row+"&col="+col);
+	xmlhttp.send();
 }
 </script>
 </head>
@@ -72,7 +72,7 @@ for($row=1; $row<=9; $row++) //Rad
 				echo "\t<td>";
 				if ($_SESSION['felt'.$row.'-'.$col]==0)
 					$_SESSION['felt'.$row.'-'.$col]=NULL;
-				echo '<input type="text" name="felt'.$row.'-'.$col.'" value="'.$_SESSION['felt'.$row.'-'.$col].'" onkeyup="showHint(this.value,this.name)" onreset="showHint(this.value,this.name)" size="1" maxlength="1" />';
+				echo '<input type="text" name="felt'.$row.'-'.$col.'" value="'.$_SESSION['felt'.$row.'-'.$col].'" onkeyup="validate(this.value,this.name,'."'$row','$col'".')" size="1" maxlength="1" />';
 			 $col++;
 
 //			}
